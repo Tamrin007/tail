@@ -9,10 +9,12 @@ import (
 
 var (
 	lines int
+	verbose bool
 )
 
 func init() {
 	flag.IntVar(&lines, "n", 10, "The location is number lines.")
+	flag.BoolVar(&verbose, "v", false, "always output headers giving file names")
 	flag.Parse()
 }
 
@@ -32,6 +34,11 @@ func tail(filename string, n int) error {
 		}
 		stack = append(stack, scanner.Text())
 	}
+
+	if verbose {
+		fmt.Println("==> " + filename  + " <==")
+	}
+
 	for _, line := range stack {
 		fmt.Println(line)
 	}
